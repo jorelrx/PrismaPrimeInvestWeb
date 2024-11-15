@@ -30,7 +30,7 @@ const FundsPage = () => {
         {
             headerName: 'Ações',
             field: 'id',
-            cellRenderer: (params) => (
+            cellRenderer: (params: { value: string; }) => (
                 <button onClick={() => handleViewDetails(params.value)}>
                     Ver Detalhes
                 </button>
