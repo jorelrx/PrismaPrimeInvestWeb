@@ -63,7 +63,7 @@ const FundsPage = () => {
                 setRowData(response.response);
                 // setMessage(response.message);
             } catch (error) {
-                console.error("Erro ao buscar usuários:", error);
+                console.error("Erro ao buscar fundos:", error);
             }
         };
         fetchFunds();

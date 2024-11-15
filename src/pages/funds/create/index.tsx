@@ -21,7 +21,7 @@ const CreateFund: React.FC = () => {
 
     return (
         <Formik
-            initialValues={{ name: '', code: '', type: '', bestDayBuy: '' } as Fund}
+            initialValues={{ name: '', code: '', type: '', bestDayBuy: '' } as unknown as Fund}
             validationSchema={validationSchema}
             onSubmit={async (values: Fund, { setSubmitting }) => {
                 try {

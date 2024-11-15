@@ -3,7 +3,7 @@ import { Fund } from "@/types/fund";
 
 class FundService extends ApiService<Fund> {
   constructor() {
-    super('/fund');
+    super('/Fund');
   }
 }
 

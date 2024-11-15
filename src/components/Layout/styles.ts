@@ -98,9 +98,11 @@ export const Main = styled.main`
 `;
 
 export const Footer = styled.footer`
+  width: 100vw;
   text-align: center;
-  padding: 1rem;
-  background-color: ${({ theme }) => theme.colors.primary.background.medium};
-  color: ${({ theme }) => theme.colors.primary.text.light};
+  padding: 1rem 0px;
+  background-color: ${({ theme }) => theme.colors.primary.background.light};
+  color: ${({ theme }) => theme.colors.primary.text.dark};
   font-size: 0.9rem;
+  margin-top: 5em;
 `;

@@ -1,11 +1,23 @@
 // src/components/Layout.tsx
 import React from 'react';
-import { LayoutProps } from './types';
-import { Circle, Footer, Header, LogoLink, Main, Navbar, NavItem, Profile, Title } from './styles';
 import Link from 'next/link';
 import Image from 'next/image';
 
+import { useAuth } from '@/contexts/AuthContext';
+import { LayoutProps } from './types';
+import { 
+  Circle, 
+  Footer, Header, 
+  LogoLink, 
+  Main, 
+  Navbar, 
+  NavItem, 
+  Profile, 
+  Title 
+} from './styles';
+
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const { user } = useAuth();
   return (
     <>
       <Header>
@@ -27,7 +39,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </NavItem>
         </Navbar>
         <Profile>
-          <span>Olá, Joel!</span>
+          <span>Olá, {user?.firstName || "Visitante"}!</span>
           <Circle>
             <Image src="/logo.png" alt="Logo" width={50} height={50} />
           </Circle>

@@ -6,8 +6,9 @@ export class ApiService<T> implements IApiService<T> {
   constructor(private readonly endpoint: string) {}
 
   async getAll(): Promise<IApiResponse<T[]>> {
-    const response = await axiosInstance.get<IApiResponse<T[]>>(this.endpoint);
-    return response.data;
+    const result = await axiosInstance.get<IApiResponse<T[]>>(this.endpoint);
+    console.log('response get AL -> ', result.data)
+    return result.data;
   }
 
   async getById(id: string): Promise<IApiResponse<T>> {
