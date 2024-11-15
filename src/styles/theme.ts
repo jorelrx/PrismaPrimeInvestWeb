@@ -44,6 +44,18 @@ export const lightTheme = {
 
 export const darkTheme = {
   colors: {
+    layout: {
+      text: {
+        light: '#E3F2FD',
+        medium: '#ffffffa6',
+        dark: '#0D47A1',
+      },
+      background: {
+        light: '#ffffff24',
+        medium: '#003b75',
+        dark: '#0D47A1',
+      },
+    },
     primary: {
       text: {
         light: '#E3F2FD', // Azul muito claro para textos

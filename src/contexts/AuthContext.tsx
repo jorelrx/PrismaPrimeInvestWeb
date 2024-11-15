@@ -24,17 +24,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const token = nookies.get(null).authToken;
         if (token) {
-            // api.get('/profile')
-            //     .then(response => setUser(response.data))
-            //     .catch(() => logout()); // Se falhar, deslogar
-            console.log('online!')
+            axiosInstance.get('/auth/me')
+                .then(response => {
+                    console.log("response: ", response.data)
+                    setUser(response.data.response)
+                })
+                .catch(() => logout());
         }
-    }, []);
+    }, [router]);
 
     async function login(email: string, password: string) {
         try {
             const data = await authService.login(email, password)
-            console.log("data login: ", data)
+            console.log("data.response login: ", data.response)
             const { token, user } = data.response;
             nookies.set(null, 'authToken', token, { maxAge: 24 * 60 * 60, path: '/' }); // 1 dia
             setUser(user);

@@ -7,7 +7,6 @@ export class ApiService<T> implements IApiService<T> {
 
   async getAll(): Promise<IApiResponse<T[]>> {
     const result = await axiosInstance.get<IApiResponse<T[]>>(this.endpoint);
-    console.log('response get AL -> ', result.data)
     return result.data;
   }
 
