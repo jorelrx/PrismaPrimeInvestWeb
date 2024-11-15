@@ -31,7 +31,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </Title>
             </LogoLink>
             <Profile>
-                {console.log(user)}
                 {user ? (
                     <>
                         <span>Olá, {user?.firstName}!</span>
