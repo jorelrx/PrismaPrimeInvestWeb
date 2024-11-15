@@ -4,7 +4,7 @@ import nookies from 'nookies';
 import { IApiResponseError } from './interfaces';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5105/api/',// 'https://prisma-prime-invest-ep.azurewebsites.net/api/',
+  baseURL: 'https://prisma-prime-invest-ep.azurewebsites.net/api/',
   headers: {
     'Content-Type': 'application/json',
   },
