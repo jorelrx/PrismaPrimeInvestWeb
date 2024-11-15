@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Formik } from 'formik';
 import { useAuth } from '@/contexts/AuthContext';
-import { LoginContainer, LoginForm, LoginInput, LoginButton } from './styles';
+import { LoginContainer, LoginForm, LoginInput, LoginButton } from '../../styles/login/styles';
 import { useNotification } from '@/contexts/NotificationContext';
 import nookies from 'nookies';
 

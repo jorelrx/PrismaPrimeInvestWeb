@@ -3,7 +3,7 @@ import React from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/router';
-import { FormContainer, FormField, FormLabel, FormInput, FormError, SubmitButton } from './styles';
+import { FormContainer, FormField, FormLabel, FormInput, FormError, SubmitButton } from '../../../styles/funds/create';
 import FundService from '@/services/FundService';
 import { Fund } from '@/types/fund';
 

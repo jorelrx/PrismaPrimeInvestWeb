@@ -11,7 +11,7 @@ import {
   DetailCard,
   DetailLabel,
   DetailValue,
-} from './styles';
+} from '../../../styles/funds/details';
 
 const fundService = new FundService();
 
