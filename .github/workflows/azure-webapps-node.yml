@@ -36,7 +36,6 @@ jobs:
           cp -r public ./output/public
           cp package.json ./output
           cp package-lock.json ./output
-          cp next.config.js ./output
           cp next.config.ts ./output
 
       # 5. Listar arquivos para debug (opcional)
