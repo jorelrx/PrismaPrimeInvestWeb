@@ -28,11 +28,19 @@ jobs:
       - name: Build Next.js project
         run: npm run build
 
+      - name: List build files
+        run: |
+          echo "Listing folder contents:"
+          ls
+          echo "Listing .next folder contents:"
+          ls -R .next
+
       # Configurar pasta de saída
       - name: Prepare output folder
         run: |
           mkdir -p ./output
           cp -r .next ./output/.next
+          cp -r public ./output/public
           cp package.json ./output
           cp package-lock.json ./output
 
