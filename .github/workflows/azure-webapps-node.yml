@@ -10,32 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout do código do repositório
+      # 1. Checkout do código do repositório
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Configurar o Node.js para build
+      # 2. Configurar o Node.js para build
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
 
-      # Instalar dependências
+      # 3. Instalar dependências
       - name: Install dependencies
         run: npm install
 
-      # Build do projeto Next.js
+      # 4. Build do projeto Next.js
       - name: Build Next.js project
         run: npm run build
 
-      - name: List build files
-        run: |
-          echo "Listing folder contents:"
-          ls
-          echo "Listing .next folder contents:"
-          ls -R .next
-
-      # Configurar pasta de saída
+      # 6. Configurar pasta de saída com os arquivos necessários
       - name: Prepare output folder
         run: |
           mkdir -p ./output
@@ -43,8 +36,16 @@ jobs:
           cp -r public ./output/public
           cp package.json ./output
           cp package-lock.json ./output
+          cp next.config.js ./output
+          cp next.config.ts ./output
 
-      # Deploy para o Azure Web App
+      # 5. Listar arquivos para debug (opcional)
+      - name: List build files
+        run: |
+          echo "Listing folder contents:"
+          ls -la ./output
+
+      # 7. Deploy para o Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
