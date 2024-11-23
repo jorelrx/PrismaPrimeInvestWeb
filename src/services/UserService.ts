@@ -1,9 +1,9 @@
-import { User } from "@/types/user";
-import { ApiService } from "./ApiService";
+import { IUser } from "@/types/user/IUser";
+import { BaseService } from "./BaseService";
 
-class UserService extends ApiService<User> {
+class UserService extends BaseService<IUser> {
   constructor() {
-    super('/user');
+    super("/user");
   }
 }
 
