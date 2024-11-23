@@ -22,7 +22,7 @@ jobs:
 
       # 3. Instalar dependências
       - name: Install dependencies
-        run: npm install
+        run: npm install --force
 
       # 4. Build do projeto Next.js
       - name: Build Next.js project
