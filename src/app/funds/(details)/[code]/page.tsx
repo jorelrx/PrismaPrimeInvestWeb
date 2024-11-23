@@ -1,5 +1,3 @@
-import { use } from "react"
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Building2, LineChartIcon as ChartLineUp, CircleDollarSign, Heart, NotebookIcon, Plus } from 'lucide-react'
@@ -13,13 +11,12 @@ const fundService = new FundService();
 
 type Params = Promise<{ code: string }>
 
-export default function FundDetails(props: {
-    children: React.ReactNode
+export default async function FundDetails(props: {
     params: Params
 }) {
-    const params = use(props.params)
+    const params = await props.params;
     const code = params.code
-    const fund = use(fundService.getByCodeAsync(code));
+    const fund = await fundService.getByCodeAsync(code);
 
     return (
         <div className="min-h-screen bg-gray-100">
