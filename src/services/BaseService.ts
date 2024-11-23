@@ -4,6 +4,7 @@ import { IApiResponse } from "@/interfaces/IApiResponse";
 export class BaseService<T> {
     constructor(private readonly endpoint: string) {}
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async getAll(filters?: Record<string, any>): Promise<IApiResponse<T[]>> {
         const result = await axiosInstance.get<IApiResponse<T[]>>(this.endpoint, {
           params: filters, // Adiciona os filtros como query string
