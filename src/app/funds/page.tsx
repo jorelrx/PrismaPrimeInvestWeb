@@ -12,13 +12,13 @@ export default async function Funds() {
     const data = await fundService.getAll(filters);
 
     return (
-      <div className="w-[70vw] m-auto my-8">
-        <div className="flex flex-col gap-3 m-auto px-8 py-4 rounded-md bg-white">
-            <h1 className="text-xl">Buscar por assets</h1>
-            <AssetTable 
-                data={data.response}
-            />
+        <div className="w-[70vw] m-auto my-8">
+            <div className="flex flex-col gap-3 m-auto px-0 py-4 rounded-md bg-white">
+                <h1 className="text-xl ml-4">Buscar por assets</h1>
+                <AssetTable 
+                    data={data.response}
+                />
+            </div>
         </div>
-      </div>
     );
 }

@@ -6,6 +6,8 @@ import { CardInfo } from "../components/CardInfo"
 import FundService from "@/services/FundService"
 import { ChartPrice } from "../components/ChartPrice";
 import { ChartPayment } from "../components/ChartPayments"
+import { DividendCard } from "@/components/DividendCard"
+import MultiChartPrice from "../components/MultiChartPrice"
 
 const fundService = new FundService();
 
@@ -65,7 +67,6 @@ export default async function FundDetails(props: {
                     <CardInfo title="P/VP" value="0,62" />
                     <CardInfo title="LIQUIDEZ DIÁRIA" value="R$ 1,93 M" />
                     <CardInfo title="VARIAÇÃO (12M)" value="-29,23%" />
-                    <CardInfo title="Melhor dia de compra" value="-29,23%" />
                 </div>
                 <div className="flex flex-col gap-5">
                     <Card>
@@ -98,12 +99,55 @@ export default async function FundDetails(props: {
                             <div className="flex flex-1 items-center gap-1 px-6 py-5 sm:py-6">
                                 <CircleDollarSign />
                                 <CardTitle>
-                                    Dividendos XPCA11
+                                    Dividendos {fund.code}
                                 </CardTitle>
                             </div>
                         </CardHeader>
                         <CardContent className="px-2 sm:p-6">
                             <ChartPayment fundId={fund?.id} />
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+            
+            <div className="flex justify-between gap-4 p-4 container mx-auto px-4 py-8 w-9/12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-8">
+                    <CardInfo title="Melhor dia de compra" value={fund?.bestBuyDay} />
+                    <CardInfo title="Preço base melhor dia de compra" value={`R$ ${fund?.bestBuyDayPrice.toFixed(2)}`} />
+                </div>
+                <DividendCard
+                    title="ÚLTIMO RENDIMENTO"
+                    amount="0,04"
+                    returnPercentage="0,62"
+                    basePrice="6,47"
+                    baseDate="31/10/2024"
+                    paymentDate="14/11/2024"
+                    layoutCard="last"
+                />
+                <DividendCard
+                    title="PRÓXIMO RENDIMENTO"
+                    amount={null}
+                    returnPercentage={null}
+                    basePrice={null}
+                    baseDate={null}
+                    paymentDate={null}
+                    layoutCard="next"
+                />
+            </div>
+            
+            <div className="container mx-auto px-4 py-8 w-9/12">
+                <div className="flex flex-col gap-5">
+                    <Card>
+                        <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
+                            <div className="flex flex-1 items-center gap-1 px-6 py-5 sm:py-6">
+                                <CircleDollarSign />
+                                <CardTitle>
+                                    Análise de Investimentos
+                                </CardTitle>
+                            </div>
+                        </CardHeader>
+                        <CardContent className="px-2 sm:p-6">
+                            <MultiChartPrice ticker={fund.code} baseAmount={1000} purchaseDay={fund.bestBuyDay} />
                         </CardContent>
                     </Card>
                 </div>
