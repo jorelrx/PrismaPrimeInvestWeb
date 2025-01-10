@@ -1,7 +1,7 @@
 import axiosInstance from "@/lib/axiosInstance";
 import { IApiResponse } from "@/interfaces/IApiResponse";
 
-export class BaseService<T> {
+export class BaseService<T, Y> {
     constructor(private readonly endpoint: string) {}
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,8 +17,8 @@ export class BaseService<T> {
       return response.data;
     }
   
-    async create(data: T): Promise<IApiResponse<T>> {
-      const response = await axiosInstance.post<IApiResponse<T>>(this.endpoint, data);
+    async create(data: Y): Promise<IApiResponse<string>> {
+      const response = await axiosInstance.post<IApiResponse<string>>(this.endpoint, data);
       return response.data;
     }
   

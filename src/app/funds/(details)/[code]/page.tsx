@@ -8,8 +8,10 @@ import { ChartPrice } from "../components/ChartPrice";
 import { ChartPayment } from "../components/ChartPayments"
 import { DividendCard } from "@/components/DividendCard"
 import MultiChartPrice from "../components/MultiChartPrice"
+import FundPaymentService from "@/services/FundPaymentService"
 
 const fundService = new FundService();
+const fundPaymentService = new FundPaymentService();
 
 type Params = Promise<{ code: string }>
 
@@ -19,6 +21,13 @@ export default async function FundDetails(props: {
     const params = await props.params;
     const code = params.code
     const fund = await fundService.getByCodeAsync(code);
+    
+    const fundPaymentsResponse = await fundPaymentService.getAll({ fundId: fund.id })
+    const fundPayments = fundPaymentsResponse.response.reverse();
+    const dividends = fundPayments.slice(0, 12).map(payment => {
+        return payment.dividend ? parseFloat(payment.dividend) : 0; // Converte para número ou usa 0
+    });
+    const totalDividend = dividends.reduce((sum, value) => sum + value, 0);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -63,10 +72,10 @@ export default async function FundDetails(props: {
             <div className="container mx-auto px-4 py-8 w-9/12">
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
                     <CardInfo title={`${fund?.code} COTAÇÃO`} value={`R$ ${fund?.price}`} />
-                    <CardInfo title={`${fund?.code} DY (12M)`} value="20,05%" />
-                    <CardInfo title="P/VP" value="0,62" />
-                    <CardInfo title="LIQUIDEZ DIÁRIA" value="R$ 1,93 M" />
-                    <CardInfo title="VARIAÇÃO (12M)" value="-29,23%" />
+                    <CardInfo title={`${fund?.code} DY (12M)`} value={`${(totalDividend / fund?.price * 100).toFixed(2)}%`} />
+                    <CardInfo title="P/VP" value={`${(fund?.price / fund?.netAssetValuePerShare).toFixed(2)}`} />
+                    <CardInfo title="LIQUIDEZ DIÁRIA" value="R$ 0" />
+                    <CardInfo title="VARIAÇÃO (12M)" value="0%" />
                 </div>
                 <div className="flex flex-col gap-5">
                     <Card>
@@ -99,7 +108,7 @@ export default async function FundDetails(props: {
                             <div className="flex flex-1 items-center gap-1 px-6 py-5 sm:py-6">
                                 <CircleDollarSign />
                                 <CardTitle>
-                                    Dividendos {fund.code}
+                                    Dividendos {fund?.code}
                                 </CardTitle>
                             </div>
                         </CardHeader>
@@ -117,11 +126,11 @@ export default async function FundDetails(props: {
                 </div>
                 <DividendCard
                     title="ÚLTIMO RENDIMENTO"
-                    amount="0,04"
-                    returnPercentage="0,62"
-                    basePrice="6,47"
-                    baseDate="31/10/2024"
-                    paymentDate="14/11/2024"
+                    amount={fundPayments[0].dividend}
+                    returnPercentage={(Number(fundPayments[0].dividend) / Number(fundPayments[0].price) * 100).toFixed(2).toString()}
+                    basePrice={fundPayments[0].price}
+                    baseDate={fundPayments[0].paymentDate.toString()}
+                    paymentDate={fundPayments[0].paymentDate.toString()}
                     layoutCard="last"
                 />
                 <DividendCard
@@ -133,6 +142,18 @@ export default async function FundDetails(props: {
                     paymentDate={null}
                     layoutCard="next"
                 />
+            </div>
+            
+            <div className="flex justify-between gap-4 p-4 container mx-auto px-4 py-8 w-9/12">
+                <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-6 gap-4 mb-8">
+                    <CardInfo title="Melhor dia de compra" value={fund?.bestBuyDay} />
+                    <CardInfo title="Preço base melhor dia de compra" value={`R$ ${fund?.bestBuyDayPrice.toFixed(2)}`} />
+                    <CardInfo title="Valor patrimonial" value={`R$ ${fund?.bestBuyDayPrice.toFixed(2)}`} />
+                    <CardInfo title="Valor patrimonial por cota" value={`R$ ${fund?.bestBuyDayPrice.toFixed(2)}`} />
+                    <CardInfo title="Total de cotistas" value={`R$ ${fund?.bestBuyDayPrice.toFixed(2)}`} />
+                    <CardInfo title="Valor minimo da cota" value={`R$ ${fund?.bestBuyDayPrice.toFixed(2)}`} />
+                    <CardInfo title="Valor máximo da cota" value={`R$ ${fund?.bestBuyDayPrice.toFixed(2)}`} />
+                </div>
             </div>
             
             <div className="container mx-auto px-4 py-8 w-9/12">

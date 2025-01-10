@@ -1,11 +1,12 @@
 "use client";
 
-import { ChartCandlestickIcon, HouseIcon, UsersIcon } from "lucide-react";
+import { ChartCandlestickIcon, HouseIcon, PlusCircleIcon, RefreshCwIcon, UsersIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubItem } from "./ui/sidebar";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 
 const AppSidebar: React.FC = () => {
     const { user } = useAuth();
@@ -33,18 +34,6 @@ const AppSidebar: React.FC = () => {
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </SidebarMenu>
-                        {user ? (
-                            <SidebarMenu>
-                                <SidebarMenuItem>
-                                    <SidebarMenuButton asChild className="hover:bg-blue-500 hover:text-blue-50 hover:p-5 transition-all duration-200">
-                                    <Link href="/users" className="px-5 rounded-none">
-                                        <UsersIcon />
-                                        <span>Users</span>
-                                    </Link>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            </SidebarMenu>
-                        ) : null}
                         <SidebarMenu>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild className="hover:bg-blue-500 hover:text-blue-50 hover:p-5 transition-all duration-200">
@@ -57,38 +46,53 @@ const AppSidebar: React.FC = () => {
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
+                {user ? (
+                    <SidebarGroup className="text-blue-50 p-0 border-b border-blue-500">
+                        <SidebarGroupLabel className="text-blue-50 p-5">Administrator</SidebarGroupLabel>
+                        <SidebarGroupContent>
+                            <SidebarMenu>
+                                <Collapsible>
+                                    <SidebarMenuItem>
+                                        <CollapsibleTrigger asChild>
+                                            <SidebarMenuButton className="hover:bg-blue-500 hover:text-blue-50 hover:p-5 transition-all duration-200">
+                                                <ChartCandlestickIcon />
+                                                <span>Assets</span>
+                                            </SidebarMenuButton>
+                                        </CollapsibleTrigger>
+                                        <CollapsibleContent>
+                                            <SidebarMenuSub>
+                                                <SidebarMenuSubItem>
+                                                    <Link href="/funds/create" className="flex items-center gap-2 px-5 py-2 hover:bg-blue-500 hover:text-blue-50 transition-all duration-200">
+                                                        <PlusCircleIcon className="w-4 h-4" />
+                                                        <span>Create Asset</span>
+                                                    </Link>
+                                                </SidebarMenuSubItem>
+                                                <SidebarMenuSubItem>
+                                                    <Link href="/admin/assets/update" className="flex items-center gap-2 px-5 py-2 hover:bg-blue-500 hover:text-blue-50 transition-all duration-200">
+                                                        <RefreshCwIcon className="w-4 h-4" />
+                                                        <span>Update Asset</span>
+                                                    </Link>
+                                                </SidebarMenuSubItem>
+                                            </SidebarMenuSub>
+                                        </CollapsibleContent>
+                                    </SidebarMenuItem>
+                                </Collapsible>
+                            </SidebarMenu>
+                            <SidebarMenu>
+                                <SidebarMenuItem>
+                                    <SidebarMenuButton asChild className="hover:bg-blue-500 hover:text-blue-50 hover:p-5 transition-all duration-200">
+                                    <Link href="/users" className="px-5 rounded-none">
+                                        <UsersIcon />
+                                        <span>Users</span>
+                                    </Link>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            </SidebarMenu>
+                        </SidebarGroupContent>
+                    </SidebarGroup>
+                ) : null}
             </SidebarContent>
         </Sidebar>
-        // <nav className="bg-blue-900 text-white w-72 h-screen fixed top-0 left-0 shadow-lg border-r border-blue-500">
-        //     <div className="h-24 flex items-center border-b border-blue-500 px-3">
-        //         <a href="#" className="flex items-center gap-2">
-        //             <div className="rounded-full bg-white w-16 h-16">
-        //                 <Image src="/logo.png" alt="Logo do site" width={80} height={80} />
-        //             </div>
-        //             <h1>Prisma Prime Invest</h1>
-        //         </a>
-        //     </div>
-        //     <ul>
-        //         <li>
-        //             <a href="#" className="flex items-center gap-2 hover:bg-blue-500 p-3 transition-all hover:p-4">
-        //                 <HouseIcon />
-        //                 <p>Dashboard</p>
-        //             </a>
-        //         </li>
-        //         <li>
-        //             <a href="#" className="flex items-center gap-2 hover:bg-blue-500 p-3 transition-all hover:p-4">
-        //                 <UsersIcon />
-        //                 <p>Users</p>
-        //             </a>
-        //         </li>
-        //         <li>
-        //             <a href="#" className="flex items-center gap-2 hover:bg-blue-500 p-3 transition-all hover:p-4">
-        //                 <ChartCandlestickIcon />
-        //                 <p>Assets</p>
-        //             </a>
-        //         </li>
-        //     </ul>
-        // </nav>
     );
 };
 

@@ -3,8 +3,9 @@ import { BaseService } from "./BaseService";
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import axiosInstance from "@/lib/axiosInstance";
 import { MonthlyInvestmentReport } from "@/types/fund/MonthlyInvestmentReport";
+import { CreateFundDto } from "@/dtos/CreateFundDto";
 
-class FundService extends BaseService<Fund> {
+class FundService extends BaseService<Fund, CreateFundDto> {
     constructor() {
         super('/Fund');
     }

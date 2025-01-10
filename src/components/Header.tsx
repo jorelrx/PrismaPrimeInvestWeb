@@ -19,9 +19,6 @@ const Header: React.FC = () => {
                             <AvatarImage src="./logo.png" alt="@shadcn" />
                             <AvatarFallback>JV</AvatarFallback>
                         </Avatar>
-                    <Link href="/login">
-                        <span>Login</span>
-                    </Link>
                     </>
                 ): (
                     <Link href="/login">

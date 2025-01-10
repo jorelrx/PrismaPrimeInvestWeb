@@ -30,7 +30,6 @@ export default function MultiChartPrice({ ticker, baseAmount, purchaseDay }: Mul
             fetchData();
         }
     }, [ticker, baseAmount, purchaseDay]);
-    console.log("analyzeInvestment MultiChart", analyzeInvestment);
     
   // Estado para controlar quais linhas estão ativas
   const [activeLines, setActiveLines] = useState({
