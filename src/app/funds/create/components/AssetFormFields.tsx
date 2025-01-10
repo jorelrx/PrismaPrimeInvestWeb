@@ -20,6 +20,7 @@ interface AssetFormFieldsProps {
     ticker?: boolean;
     tipoFundo?: boolean;
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
 }
 
