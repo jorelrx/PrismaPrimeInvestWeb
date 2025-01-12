@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Building2, LineChartIcon as ChartLineUp, CircleDollarSign, Heart, NotebookIcon, Plus } from 'lucide-react'
+import { LineChartIcon as ChartLineUp, CircleDollarSign, Heart, Plus } from 'lucide-react'
 import { CardInfo } from "../components/CardInfo"
 
 import FundService from "@/services/FundService"
