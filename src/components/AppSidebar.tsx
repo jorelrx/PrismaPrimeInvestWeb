@@ -1,6 +1,6 @@
 "use client";
 
-import { ChartCandlestickIcon, HouseIcon, PlusCircleIcon, RefreshCwIcon, UsersIcon } from "lucide-react";
+import { ChartCandlestickIcon, HouseIcon, PlusCircleIcon, RefreshCwIcon, UsersIcon, Wallet } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubItem } from "./ui/sidebar";
@@ -40,6 +40,16 @@ const AppSidebar: React.FC = () => {
                                 <Link href="/funds" className="px-5 rounded-none">
                                     <ChartCandlestickIcon />
                                     <span>Assets</span>
+                                </Link>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        </SidebarMenu>
+                        <SidebarMenu>
+                            <SidebarMenuItem>
+                                <SidebarMenuButton asChild className="hover:bg-blue-500 hover:text-blue-50 hover:p-5 transition-all duration-200">
+                                <Link href="/wallet" className="px-5 rounded-none">
+                                    <Wallet />
+                                    <span>Wallet</span>
                                 </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
