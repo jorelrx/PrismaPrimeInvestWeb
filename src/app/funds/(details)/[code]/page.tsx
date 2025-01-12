@@ -43,20 +43,6 @@ export default async function FundDetails(props: {
                                 <p className="text-sm text-gray-400">{fund?.name}</p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-8">
-                            <button className="flex items-center gap-2">
-                                <NotebookIcon className="h-5 w-5" />
-                                <span>RESUMO</span>
-                            </button>
-                            <button className="flex items-center gap-2">
-                                <ChartLineUp className="h-5 w-5" />
-                                <span>COTAÇÃO</span>
-                            </button>
-                            <button className="flex items-center gap-2">
-                                <Building2 className="h-5 w-5" />
-                                <span>EMPRESA</span>
-                            </button>
-                        </div>
                         <div className="flex items-center gap-4">
                             <button className="rounded-full p-2 hover:bg-gray-700">
                                 <Heart className="h-5 w-5" />
@@ -120,9 +106,8 @@ export default async function FundDetails(props: {
             </div>
             
             <div className="flex justify-between gap-4 p-4 container mx-auto px-4 py-8 w-9/12">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-8">
-                    <CardInfo title="Melhor dia de compra" value={fund?.bestBuyDay} />
-                    <CardInfo title="Preço base melhor dia de compra" value={`R$ ${fund?.bestBuyDayPrice.toFixed(2)}`} />
+                <div>
+                    <CardInfo title="Resumo dividendos" value={`O Fundo ${fund?.code} costuma pagar seu dividendo no dia ${fundPayments[0].paymentDate} e tem uma média de pagamento mensal no valor de R$ 00,00 que leva a ter um rendimendo anual médio de **%`} />
                 </div>
                 <DividendCard
                     title="ÚLTIMO RENDIMENTO"
