@@ -10,14 +10,14 @@ import { Button } from "@/components/ui/button"
 import { Fund } from "@/types/fund/Fund"
 
 import { ArrowUpDown } from 'lucide-react'
-import { Row } from "@tanstack/react-table";
+import { ColumnDef, Row } from "@tanstack/react-table";
 
 export default function Funds() {
     const [data, setData] = useState<Fund[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const router = useRouter();
     
-    const columns = [
+    const columns: ColumnDef<Fund>[] = [
         {
             accessorKey: "code",
             header: ({ column }) => {

@@ -9,21 +9,24 @@ import WalletService from "@/services/WalletService";
 import ListTable from "@/components/ListTable";
 import { Button } from "@/components/ui/button";
 import { IWallet } from "@/types/user/IWallet";
+import { Row, Column, ColumnDef } from "@tanstack/react-table";
 
 export default function Wallets() {
     const [data, setData] = useState<IWallet[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const router = useRouter();
 
-    const columns = [
+    const columns: ColumnDef<IWallet>[] = [
         {
             accessorKey: "name",
-            header: ({ column }: any) => {
+            header: ({ column }: { column: Column<IWallet> }) => {
                 return (
                     <div className="flex items-center">
                         <Button
                             variant="ghost"
-                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                            onClick={() =>
+                                column.toggleSorting?.(column.getIsSorted() === "asc")
+                            }
                         >
                             Nome
                         </Button>
@@ -34,12 +37,14 @@ export default function Wallets() {
         },
         {
             accessorKey: "totalInvested",
-            header: ({ column }: any) => {
+            header: ({ column }: { column: Column<IWallet> }) => {
                 return (
                     <div className="flex items-center">
                         <Button
                             variant="ghost"
-                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                            onClick={() =>
+                                column.toggleSorting?.(column.getIsSorted() === "asc")
+                            }
                         >
                             Total Investido
                         </Button>
@@ -47,8 +52,8 @@ export default function Wallets() {
                     </div>
                 );
             },
-            cell: ({ row }: any) => {
-                const amount = parseFloat(row.getValue("totalInvested"));
+            cell: ({ row }: { row: Row<IWallet> }) => {
+                const amount = parseFloat(row.getValue("totalInvested") as string);
                 const formatted = new Intl.NumberFormat("pt-BR", {
                     style: "currency",
                     currency: "BRL",
@@ -59,12 +64,14 @@ export default function Wallets() {
         },
         {
             accessorKey: "createdByUser",
-            header: ({ column }: any) => {
+            header: ({ column }: { column: Column<IWallet> }) => {
                 return (
                     <div className="flex items-center">
                         <Button
                             variant="ghost"
-                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                            onClick={() =>
+                                column.toggleSorting?.(column.getIsSorted() === "asc")
+                            }
                         >
                             Criado por
                         </Button>
@@ -96,8 +103,8 @@ export default function Wallets() {
         fetchData();
     }, []);
 
-    const handleRowClick = (row: any) => {
-        router.push(`/wallet/${row.original.id}`)
+    const handleRowClick = (row: Row<IWallet>) => {
+        router.push(`/wallet/${row.original.id}`);
     };
 
     return (
@@ -106,19 +113,13 @@ export default function Wallets() {
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between py-4 text-blue-50">
                         <div className="flex items-center gap-4">
-                            <div className="p-2">
-                                Carteiras
-                            </div>
+                            <div className="p-2">Carteiras</div>
                         </div>
                         <div className="flex items-center gap-4">
-                            <div className="p-2">
-                                Resumo
-                            </div>
+                            <div className="p-2">Resumo</div>
                         </div>
                         <div className="flex items-center gap-4">
-                            <div className="p-2">
-                                Criar Wallet
-                            </div>
+                            <div className="p-2">Criar Wallet</div>
                         </div>
                     </div>
                 </div>
