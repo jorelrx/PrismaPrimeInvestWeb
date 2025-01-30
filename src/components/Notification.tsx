@@ -3,6 +3,7 @@
 import React from "react";
 import { cn } from "@/lib/utils"; // Helper opcional para combinar classes do Tailwind
 import { useNotification } from "@/contexts/NotificationContext";
+import { X } from "lucide-react"
 
 
 const NotificationComponent: React.FC = () => {
@@ -14,15 +15,15 @@ const NotificationComponent: React.FC = () => {
                 <div
                     key={id}
                     className={cn(
-                    "px-4 py-2 rounded-md shadow-md transition-all duration-300 flex",
-                    type === "success" && "bg-green-500 text-white",
-                    type === "error" && "bg-red-500 text-white",
-                    type === "info" && "bg-blue-500 text-white",
-                    type === "warning" && "bg-yellow-500 text-black"
+                        "px-2 py-3 rounded-md shadow-md transition-all duration-300 flex justify-between",
+                        type === "success" && "bg-green-500 text-white",
+                        type === "error" && "bg-red-500 text-white",
+                        type === "info" && "bg-blue-500 text-white",
+                        type === "warning" && "bg-yellow-500 text-black"
                     )}
                 >
-                    {message}
-                    <button onClick={() => removeNotification(id)}>×</button>
+                    <p className="px-3">{message}</p>
+                    <button onClick={() => removeNotification(id)}><X /></button>
                 </div>
             ))}
         </div>

@@ -1,7 +1,7 @@
-import { IUser } from "@/types/user/IUser";
+import { IUser, IUserCreate } from "@/types/user/IUser";
 import { BaseService } from "./BaseService";
 
-class UserService extends BaseService<IUser, null> {
+class UserService extends BaseService<IUser, IUserCreate> {
   constructor() {
     super("/user");
   }
