@@ -1,21 +1,15 @@
 import { use } from "react";
 import { Metadata } from "next";
-import { CardTable } from "@/components/CardTable";
+import { FundDailyPrice, InsightCardTable } from "@/components/InsightCardTable";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import FundDailyPriceService from "@/services/FundDailyPriceService";
-import { MarketOverview } from "@/components/MarketOverview";
-import { RecentTransactions } from "@/components/RecentTransactions";
-import { PerformanceChart } from "@/components/PerformanceChart";
-import { NewsCarousel } from "@/components/NewsCarousel";
-import { FundInsights } from "@/components/FundInsights";
-import { TopPerformers } from "@/components/TopPerformers";
 
 const fundDailyPriceService = new FundDailyPriceService();
 
 interface Filter {
     date: string;
     orderBy: string;
-    orderDirection?: string;
+    sortDirection?: string;
 }
 
 export const metadata: Metadata = {
@@ -26,80 +20,67 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
-    const filters: Filter = { 
+    const filtersHigh: Filter = { 
         date: new Date().toISOString().split('T')[0],
         orderBy: "ClosePrice",
+        sortDirection: "asc"
+    };
+    const filtersLow: Filter = { 
+        date: new Date().toISOString().split('T')[0],
+        orderBy: "ClosePrice",
+        sortDirection: "desc"
+    };
+
+    const calculateVariation = (openPrice: number, closePrice: number): number => {
+        if (openPrice === 0) return 0;
+        return ((closePrice - openPrice) / openPrice) * 100;
     };
     
-    const { response: fundDailyPrices } = use(fundDailyPriceService.getAll(filters));
+    const { response: highFundDailyPricesResponse } = use(fundDailyPriceService.getAll(filtersHigh));
+    const { response: lowFundDailyPricesResponse } = use(fundDailyPriceService.getAll(filtersLow));
+
+    const highFundDailyPrices: FundDailyPrice[] = highFundDailyPricesResponse.map(item => ({
+        id: item.id,
+        code: item.code,
+        openPrice: item.openPrice,
+        closePrice: item.closePrice,
+        maxPrice: item.maxPrice,
+        minPrice: item.minPrice,
+        variation: calculateVariation(item.openPrice, item.closePrice),
+    })).sort((a, b) => b.variation - a.variation);
+
+    const lowFundDailyPrices: FundDailyPrice[] = lowFundDailyPricesResponse.map(item => ({
+        id: item.id,
+        code: item.code,
+        openPrice: item.openPrice,
+        closePrice: item.closePrice,
+        maxPrice: item.maxPrice,
+        minPrice: item.minPrice,
+        variation: calculateVariation(item.openPrice, item.closePrice),
+    })).sort((a, b) => a.variation - b.variation);
+
+    const columns = [
+        { key: "code", label: "Código" },
+        { key: "minPrice", label: "Valor Mínimo" },
+        { key: "maxPrice", label: "Valor Máximo" },
+        { key: "openPrice", label: "Valor Abertura" },
+        { key: "closePrice", label: "Valor Fechamento" },
+        { key: "variation", label: "Variação (%)" },
+    ];
 
     return (
         <div className="flex flex-col gap-6 p-6">
             <h1 className="text-3xl font-bold">Dashboard</h1>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <Card className="col-span-full lg:col-span-2">
-                    <CardHeader>
-                        <CardTitle>Desempenho dos Fundos</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <PerformanceChart data={fundDailyPrices} />
-                    </CardContent>
-                </Card>
-                
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Notícias do Mercado</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <NewsCarousel />
-                    </CardContent>
-                </Card>
-                
-                <Card className="col-span-full">
-                    <CardHeader>
-                        <CardTitle>Insights dos Fundos</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <FundInsights />
-                    </CardContent>
-                </Card>
-                
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Top Performers</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <TopPerformers data={fundDailyPrices} />
-                    </CardContent>
-                </Card>
-                
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Transações Recentes</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <RecentTransactions />
-                    </CardContent>
-                </Card>
-                
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Visão Geral do Mercado</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <MarketOverview />
-                    </CardContent>
-                </Card>
-            </div>
 
             <Card>
                 <CardHeader>
                     <CardTitle>Todos os Fundos</CardTitle>
                     <CardDescription>Visão detalhada de todos os fundos</CardDescription>
                 </CardHeader>
-                <CardContent>
-                    <CardTable data={fundDailyPrices} />
+                <CardContent className="flex justify-between gap-4">
+                    <InsightCardTable data={highFundDailyPrices} title="Alta" description="Maior crescimento diário" columns={columns} />
+                    <InsightCardTable data={lowFundDailyPrices} title="Baixa" description="Menor crescimento diário" columns={columns} />
+                    <InsightCardTable data={[]} title="Dividendos" description="Melhores dividendos do mês" columns={[]} />
                 </CardContent>
             </Card>
         </div>
