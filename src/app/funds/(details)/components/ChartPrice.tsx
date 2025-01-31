@@ -17,23 +17,24 @@ const chartConfig = {
 
 interface ChartPriceProps {
     fundId?: string;
+    period: number;
 }
 
 const fundDailyPriceService = new FundDailyPriceService();
 
-export function ChartPrice({ fundId } : ChartPriceProps) {
+export function ChartPrice({ fundId, period } : ChartPriceProps) {
     const [fundDailyPrices, setFundDailyPrices] = useState<FundDailyPrice[]>([]);
 
     useEffect(() => {
         if (fundId) {
             const fetchData = async () => {
-                const result = await fundDailyPriceService.getAll({ fundId });
+                const result = await fundDailyPriceService.getAll({ fundId, period });
                 setFundDailyPrices(result.response);
             };
-    
+            
             fetchData();
         }
-    }, [fundId]);
+    }, [fundId, period]);
 
     return (
         <ResponsiveContainer width="100%" height="100%">

@@ -18,23 +18,24 @@ const chartConfig = {
 
 interface ChartPaymentProps {
     fundId?: string;
+    period: number;
 }
 
 const fundPaymentService = new FundPaymentService();
 
-export function ChartPayment({ fundId } : ChartPaymentProps) {
+export function ChartPayment({ fundId, period } : ChartPaymentProps) {
     const [fundPayments, setFundPayments] = useState<FundPayment[]>([]);
 
     useEffect(() => {
         if (fundId) {
             const fetchData = async () => {
-                const result = await fundPaymentService.getAll({ fundId });
+                const result = await fundPaymentService.getAll({ fundId, period });
                 setFundPayments(result.response);
             };
     
             fetchData();
         }
-    }, [fundId]);
+    }, [fundId, period]);
 
     return (
         <ChartContainer
