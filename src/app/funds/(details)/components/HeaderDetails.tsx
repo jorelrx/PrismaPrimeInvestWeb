@@ -1,11 +1,45 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import FundFavoriteService from "@/services/FundFavoriteService";
 import { Heart, Plus } from "lucide-react";
+import { useNotification } from "@/contexts/NotificationContext";
 
 interface HeaderDetailsProps {
     code: string;
     name: string;
 }
 
-export function HeaderDetails({ code, name } : HeaderDetailsProps ) {
+const fundFavoriteService = new FundFavoriteService();
+
+export function HeaderDetails({ code, name }: HeaderDetailsProps) {
+    const { addNotification } = useNotification();
+    const { user } = useAuth();
+    const [idFavorite, setIdFavorite] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (user) {
+            (async () => {
+                const { response  } = await fundFavoriteService.getAll({ code });
+                setIdFavorite(response.length > 0 ? response[0].id : null);
+            })();
+        }
+    }, [user, code]);
+
+    const handleFavorite = async () => {
+        if (!idFavorite) {
+            const { response: respondeId } = await fundFavoriteService.create({ code });
+            addNotification("success", "Fundo adicionado aos favoritos");
+            setIdFavorite(respondeId);
+        }
+        else {
+            await fundFavoriteService.delete(idFavorite);
+            addNotification("success", "Fundo removido dos favoritos");
+            setIdFavorite(null);
+        }
+    };
+
     return (
         <div className="sticky top-0 z-50 w-full border-b bg-blue-800">
             <div className="container mx-auto px-4">
@@ -20,15 +54,26 @@ export function HeaderDetails({ code, name } : HeaderDetailsProps ) {
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
-                        <button className="rounded-full p-2 hover:bg-gray-700">
-                            <Heart className="h-5 w-5" />
-                        </button>
-                        <button className="rounded-full p-2 hover:bg-gray-700">
-                            <Plus className="h-5 w-5" />
-                        </button>
+                        {user ? (
+                            <>
+                                <button
+                                    onClick={handleFavorite}
+                                    className={`rounded-full p-2 transition ${
+                                        idFavorite !== null ? "bg-red-600 text-white" : "hover:bg-gray-700"
+                                    }`}
+                                >
+                                    <Heart className="h-5 w-5" />
+                                </button>
+                                <button className="rounded-full p-2 hover:bg-gray-700">
+                                    <Plus className="h-5 w-5" />
+                                </button>
+                            </>
+                        ) : (
+                            <p>Faça login para favoritar ou simular uma compra</p>
+                        )}
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
