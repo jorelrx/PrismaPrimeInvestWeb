@@ -5,12 +5,14 @@ import { AuthState, initialState, AuthAction, AuthContextProps } from "./AuthTyp
 import { authReducer } from "./AuthReducer";
 import { AuthService } from "../../services/AuthService";
 import { setCookie, destroyCookie } from "nookies";
+import { useNotification } from "../NotificationContext";
 
 const authService = new AuthService();
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+    const { addNotification } = useNotification();
     const [state, dispatch] = useReducer<React.Reducer<AuthState, AuthAction>>(authReducer, initialState);
 
     const login = useCallback(async (email: string, password: string) => {
@@ -40,9 +42,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             const response = await authService.me();
             dispatch({ type: "LOAD_USER_SUCCESS", payload: response.response });
         } catch {
+            addNotification("error", "Erro ao carregar usuário");
+            logout()
             dispatch({ type: "LOAD_USER_FAILURE" });
         }
-    }, []);
+    }, [logout, addNotification]);
 
     useEffect(() => {
         loadUser();

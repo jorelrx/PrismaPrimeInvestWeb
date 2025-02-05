@@ -22,7 +22,7 @@ export default async function FundDetails(props: {
     const code = params.code
     const fund = await fundService.getByCodeAsync(code);
     
-    const fundPaymentsResponse = await fundPaymentService.getAll({ fundId: fund.id })
+    const fundPaymentsResponse = await fundPaymentService.getAll({ fundId: fund?.id })
     const fundPayments = fundPaymentsResponse.response.reverse();
     const dividends = fundPayments.slice(0, 12).map(payment => {
         return payment.dividend ? parseFloat(payment.dividend) : 0;
@@ -31,7 +31,7 @@ export default async function FundDetails(props: {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <HeaderDetails code={fund?.code} name={fund?.name} />
+            <HeaderDetails assetId={fund?.id} code={fund?.code} name={fund?.name} />
             
             <div className="container mx-auto px-4 py-1 w-9/12 my-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -96,7 +96,7 @@ export default async function FundDetails(props: {
                             </div>
                         </CardHeader>
                         <CardContent className="px-2 sm:p-6">
-                            <MultiChartPrice ticker={fund.code} baseAmount={1000} purchaseDay={fund.bestBuyDay} />
+                            <MultiChartPrice ticker={fund?.code} baseAmount={1000} purchaseDay={fund.bestBuyDay} />
                         </CardContent>
                     </Card>
                 </div>
