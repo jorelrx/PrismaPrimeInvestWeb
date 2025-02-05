@@ -96,7 +96,7 @@ export default async function FundDetails(props: {
                             </div>
                         </CardHeader>
                         <CardContent className="px-2 sm:p-6">
-                            <MultiChartPrice ticker={fund?.code} baseAmount={1000} purchaseDay={fund.bestBuyDay} />
+                            <MultiChartPrice ticker={fund?.code} baseAmount={1000} purchaseDay={fund?.bestBuyDay} />
                         </CardContent>
                     </Card>
                 </div>

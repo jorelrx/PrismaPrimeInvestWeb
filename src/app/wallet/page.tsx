@@ -63,7 +63,34 @@ export default function Wallets() {
             },
         },
         {
-            accessorKey: "createdByUser",
+            accessorKey: "totalCurrentValue",
+            header: ({ column }: { column: Column<IWallet> }) => {
+                return (
+                    <div className="flex items-center">
+                        <Button
+                            variant="ghost"
+                            onClick={() =>
+                                column.toggleSorting?.(column.getIsSorted() === "asc")
+                            }
+                        >
+                            Total atual
+                        </Button>
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </div>
+                );
+            },
+            cell: ({ row }: { row: Row<IWallet> }) => {
+                const amount = parseFloat(row.getValue("totalCurrentValue") as string);
+                const formatted = new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                }).format(amount);
+
+                return formatted;
+            },
+        },
+        {
+            accessorKey: "createdByUserName",
             header: ({ column }: { column: Column<IWallet> }) => {
                 return (
                     <div className="flex items-center">
