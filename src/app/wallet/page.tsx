@@ -10,6 +10,7 @@ import ListTable from "@/components/ListTable";
 import { Button } from "@/components/ui/button";
 import { IWallet } from "@/types/user/IWallet";
 import { Row, Column, ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 
 export default function Wallets() {
     const [data, setData] = useState<IWallet[]>([]);
@@ -136,30 +137,18 @@ export default function Wallets() {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <div className="sticky top-0 z-50 w-full border-b bg-blue-800">
-                <div className="container mx-auto px-4">
-                    <div className="flex items-center justify-between py-4 text-blue-50">
-                        <div className="flex items-center gap-4">
-                            <div className="p-2">Carteiras</div>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <div className="p-2">Resumo</div>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <div className="p-2">Criar Wallet</div>
-                        </div>
-                    </div>
+            <div className="w-[70vw] m-auto my-8 bg-white rounded-md">
+                <div className="flex justify-between p-4">
+                    <h1 className="text-xl">Suas carteiras.</h1>
+                    <Link href="/wallet/create">
+                        <Button className="ml-4">Nova carteira</Button>
+                    </Link>
                 </div>
-            </div>
-            <div className="w-[70vw] m-auto my-8">
-                <div className="flex flex-col gap-3 m-auto px-0 py-4 rounded-md bg-white">
-                    <h1 className="text-xl ml-4">Suas carteiras.</h1>
-                    {loading ? (
-                        <div className="text-center">Carregando...</div>
-                    ) : (
-                        <ListTable data={data} columns={columns} onRowClick={handleRowClick} />
-                    )}
-                </div>
+                {loading ? (
+                    <div className="text-center">Carregando...</div>
+                ) : (
+                    <ListTable data={data} columns={columns} onRowClick={handleRowClick} />
+                )}
             </div>
         </div>
     );
