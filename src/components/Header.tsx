@@ -50,12 +50,12 @@ const Header: React.FC = () => {
                         <DropdownMenuContent className="w-56">
                             <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                Perfil
-                                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                            </DropdownMenuItem>
-                            </DropdownMenuGroup>
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem>
+                                        Perfil
+                                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>
                                 <Button onClick={handleLogout}>Sair</Button>
@@ -64,7 +64,7 @@ const Header: React.FC = () => {
                         </DropdownMenuContent>
                     </DropdownMenu>
                 ): (
-                    <Button className="bg-blue-900 shadow-blue-900 hover:bg-blue-900 hover:shadow-blue-950" onClick={() => openModal(true)}>Entrar</Button>
+                    <Button className="bg-blue-900 shadow-blue-900 hover:bg-blue-900 hover:underline" onClick={() => openModal(true)}>Login/SignUp</Button>
                 )}
             </div>
         </header>

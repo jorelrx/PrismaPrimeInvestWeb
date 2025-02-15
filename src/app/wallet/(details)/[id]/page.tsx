@@ -5,6 +5,8 @@ import WalletService from "@/services/WalletService";
 import { IWallet } from "@/types/user/IWallet";
 import { CardInfo } from "../components/CardInfo";
 import { WalletChartCard } from "../components/WalletChartCard";
+import { TransactionsChartCard } from "../components/TransactionsChartCard";
+import { HeaderDetails } from "../components/HeaderDetails";
 
 const walletService = new WalletService();
 
@@ -23,14 +25,14 @@ export default function WalletDetails({ params }: { params: Promise<{ id: string
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <div className="container mx-auto px-4 py-1 w-9/12 my-4">
-                <h1>{wallet?.name || "Carregando..."}</h1>
-        
+            <HeaderDetails name={wallet?.name} />
+            <div className="flex flex-col gap-4 mx-auto px-4 py-1 w-9/12 my-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
                     <CardInfo title="Preço bruto investido" value={`R$ ${wallet?.totalInvested}`} />
                     <CardInfo title="Preço total atual" value={`R$ ${wallet?.totalCurrentValue}`} />
                 </div>
                 <WalletChartCard walletId={wallet?.id} />
+                <TransactionsChartCard walletId={wallet?.id} />
             </div>
         </div>
     );

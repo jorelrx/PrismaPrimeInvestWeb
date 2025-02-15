@@ -12,6 +12,8 @@ export interface WalletInvestmentAnalysisDto {
     investedInMonth: number;
     totalCurrentValue: number;
     totalGrossInvested: number;
+    totalCurrentValueWithDividends: number;
+    totalGrossInvestedWithDividends: number;
     totalDividends: number;
     monthlyEarnings: number;
 }

@@ -91,6 +91,24 @@ export default function Wallets() {
             },
         },
         {
+            accessorKey: "isPublic",
+            header: ({ column }: { column: Column<IWallet> }) => {
+                return (
+                    <div className="flex items-center">
+                        <Button
+                            variant="ghost"
+                            onClick={() =>
+                                column.toggleSorting?.(column.getIsSorted() === "asc")
+                            }
+                        >
+                            isPublic
+                        </Button>
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </div>
+                );
+            },
+        },
+        {
             accessorKey: "createdByUserName",
             header: ({ column }: { column: Column<IWallet> }) => {
                 return (
