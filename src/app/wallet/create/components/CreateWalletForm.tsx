@@ -41,7 +41,7 @@ export default function CreateWalletForm() {
         try {
             const walletDto: CreateWalletDto = {
                 name: values.walletName,
-                isPublid: values.isPublic
+                isPublic: values.isPublic
             }
 
             await walletService.create(walletDto)
