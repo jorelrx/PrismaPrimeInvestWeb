@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Row, Column, ColumnDef } from "@tanstack/react-table";
 import WalletFundService from "@/services/WalletFundService";
 import { WalletFund } from "@/types/relationship/WalletFund";
+import { formatCurrency } from "@/lib/utils";
+import { format } from "date-fns";
 
 interface TransactionsChartCardProps {
     walletId?: string;
@@ -46,6 +48,12 @@ export function TransactionsChartCard({ walletId }: TransactionsChartCardProps) 
                     </div>
                 );
             },
+            cell: ({ row }: { row: Row<WalletFund> }) => {
+                const date = new Date(row.getValue("purchaseDate") as string);
+                const formattedDate = format(date, "dd/MM/yyyy");
+
+                return formattedDate;
+            },
         },
         {
             accessorKey: "purchasePrice",
@@ -66,10 +74,7 @@ export function TransactionsChartCard({ walletId }: TransactionsChartCardProps) 
             },
             cell: ({ row }: { row: Row<WalletFund> }) => {
                 const amount = parseFloat(row.getValue("purchasePrice") as string);
-                const formatted = new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                }).format(amount);
+                const formatted = formatCurrency(amount);
 
                 return formatted;
             },
@@ -93,7 +98,7 @@ export function TransactionsChartCard({ walletId }: TransactionsChartCardProps) 
             },
         },
         {
-            accessorKey: "totalDividends",
+            accessorKey: "totalAmount",
             header: ({ column }: { column: Column<WalletFund> }) => {
                 return (
                     <div className="flex items-center">
@@ -103,24 +108,21 @@ export function TransactionsChartCard({ walletId }: TransactionsChartCardProps) 
                                 column.toggleSorting?.(column.getIsSorted() === "asc")
                             }
                         >
-                            Total Dividendos
+                            Total investido
                         </Button>
                         <ArrowUpDown className="ml-2 h-4 w-4" />
                     </div>
                 );
             },
             cell: ({ row }: { row: Row<WalletFund> }) => {
-                const amount = parseFloat(row.getValue("totalDividends") as string);
-                const formatted = new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                }).format(amount);
+                const amount = parseFloat(row.getValue("totalAmount") as string);
+                const formatted = formatCurrency(amount);
 
                 return formatted;
             },
         },
         {
-            accessorKey: "monthlyEarnings",
+            accessorKey: "fundName",
             header: ({ column }: { column: Column<WalletFund> }) => {
                 return (
                     <div className="flex items-center">
@@ -130,20 +132,11 @@ export function TransactionsChartCard({ walletId }: TransactionsChartCardProps) 
                                 column.toggleSorting?.(column.getIsSorted() === "asc")
                             }
                         >
-                            Dividendos mensal
+                            Nome do Fundo
                         </Button>
                         <ArrowUpDown className="ml-2 h-4 w-4" />
                     </div>
                 );
-            },
-            cell: ({ row }: { row: Row<WalletFund> }) => {
-                const amount = parseFloat(row.getValue("monthlyEarnings") as string);
-                const formatted = new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                }).format(amount);
-
-                return formatted;
             },
         },
     ];

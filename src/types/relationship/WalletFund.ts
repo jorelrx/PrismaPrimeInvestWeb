@@ -1,8 +1,10 @@
-import { Fund } from "../fund/Fund";
-
 export interface WalletFund {
     id: string;
-    fund: Fund;
+    purchaseDate: Date;
+    purchasePrice: number;
+    quantity: number;
+    totalAmount: number;
+    fundName: string;
 }
 
 export interface CreateWalletFund {

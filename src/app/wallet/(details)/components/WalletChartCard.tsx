@@ -9,6 +9,8 @@ import { WalletInvestmentAnalysisDto } from "@/types/user/IWallet";
 import WalletService from "@/services/WalletService";
 import { Button } from "@/components/ui/button";
 import { Row, Column, ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
+import { formatCurrency } from "@/lib/utils";
 
 interface WalletChartCardProps {
     walletId?: string;
@@ -47,6 +49,12 @@ export function WalletChartCard({ walletId }: WalletChartCardProps) {
                     </div>
                 );
             },
+            cell: ({ row }: { row: Row<WalletInvestmentAnalysisDto> }) => {
+                const date = new Date(row.getValue("date") as string);
+                const formattedDate = format(date, "dd/MM/yyyy");
+
+                return formattedDate;
+            },
         },
         {
             accessorKey: "totalGrossInvested",
@@ -67,10 +75,7 @@ export function WalletChartCard({ walletId }: WalletChartCardProps) {
             },
             cell: ({ row }: { row: Row<WalletInvestmentAnalysisDto> }) => {
                 const amount = parseFloat(row.getValue("totalGrossInvested") as string);
-                const formatted = new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                }).format(amount);
+                const formatted = formatCurrency(amount);
 
                 return formatted;
             },
@@ -94,10 +99,7 @@ export function WalletChartCard({ walletId }: WalletChartCardProps) {
             },
             cell: ({ row }: { row: Row<WalletInvestmentAnalysisDto> }) => {
                 const amount = parseFloat(row.getValue("totalGrossInvestedWithDividends") as string);
-                const formatted = new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                }).format(amount);
+                const formatted = formatCurrency(amount);
 
                 return formatted;
             },
@@ -121,10 +123,7 @@ export function WalletChartCard({ walletId }: WalletChartCardProps) {
             },
             cell: ({ row }: { row: Row<WalletInvestmentAnalysisDto> }) => {
                 const amount = parseFloat(row.getValue("totalCurrentValue") as string);
-                const formatted = new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                }).format(amount);
+                const formatted = formatCurrency(amount);
 
                 return formatted;
             },
@@ -148,10 +147,7 @@ export function WalletChartCard({ walletId }: WalletChartCardProps) {
             },
             cell: ({ row }: { row: Row<WalletInvestmentAnalysisDto> }) => {
                 const amount = parseFloat(row.getValue("totalCurrentValueWithDividends") as string);
-                const formatted = new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                }).format(amount);
+                const formatted = formatCurrency(amount);
 
                 return formatted;
             },
@@ -175,10 +171,7 @@ export function WalletChartCard({ walletId }: WalletChartCardProps) {
             },
             cell: ({ row }: { row: Row<WalletInvestmentAnalysisDto> }) => {
                 const amount = parseFloat(row.getValue("totalDividends") as string);
-                const formatted = new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                }).format(amount);
+                const formatted = formatCurrency(amount);
 
                 return formatted;
             },
@@ -202,10 +195,7 @@ export function WalletChartCard({ walletId }: WalletChartCardProps) {
             },
             cell: ({ row }: { row: Row<WalletInvestmentAnalysisDto> }) => {
                 const amount = parseFloat(row.getValue("monthlyEarnings") as string);
-                const formatted = new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                }).format(amount);
+                const formatted = formatCurrency(amount);
 
                 return formatted;
             },

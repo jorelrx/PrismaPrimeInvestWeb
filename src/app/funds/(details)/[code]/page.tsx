@@ -2,6 +2,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { CircleDollarSign } from 'lucide-react'
 import { CardInfo } from "../components/CardInfo"
 
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+
 import FundService from "@/services/FundService"
 import { DividendCard } from "@/components/DividendCard"
 import MultiChartPrice from "../components/MultiChartPrice"
@@ -9,6 +12,7 @@ import FundPaymentService from "@/services/FundPaymentService"
 import { HeaderDetails } from "../components/HeaderDetails"
 import { FundChartCard } from "../components/FundChartCard"
 import { ChartPaymentsCard } from "../components/ChartPaymentsCard"
+import { formatCurrency } from "@/lib/utils";
 
 const fundService = new FundService();
 const fundPaymentService = new FundPaymentService();
@@ -50,15 +54,15 @@ export default async function FundDetails(props: {
             
             <div className="flex justify-between gap-4 p-4 container mx-auto px-4 py-8 w-9/12">
                 <div>
-                    <CardInfo title="Resumo dividendos" value={`O Fundo ${fund?.code} costuma pagar seu dividendo no dia ${fundPayments[0].paymentDate} e tem uma média de pagamento mensal no valor de R$ 00,00 que leva a ter um rendimendo anual médio de **%`} />
+                    <CardInfo title="Resumo dividendos" value={`O Fundo ${fund?.code} costuma pagar seu dividendo no dia ${format(fundPayments[0].paymentDate, "dd", { locale: ptBR })} e tem uma média de pagamento mensal no valor de ${formatCurrency(totalDividend / 12)} que leva a ter um rendimendo anual médio de ${(totalDividend / fund?.price * 100).toFixed(2)}%`} />
                 </div>
                 <DividendCard
                     title="ÚLTIMO RENDIMENTO"
                     amount={fundPayments[0].dividend}
                     returnPercentage={(Number(fundPayments[0].dividend) / Number(fundPayments[0].price) * 100).toFixed(2).toString()}
                     basePrice={fundPayments[0].price}
-                    baseDate={fundPayments[0].paymentDate.toString()}
-                    paymentDate={fundPayments[0].paymentDate.toString()}
+                    baseDate={format(fundPayments[0].paymentDate, "dd/MM/yyyy", { locale: ptBR })}
+                    paymentDate={format(fundPayments[0].paymentDate, "dd/MM/yyyy", { locale: ptBR })}
                     layoutCard="last"
                 />
                 <DividendCard
