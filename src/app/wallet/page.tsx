@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Wallets() {
@@ -10,7 +9,7 @@ export default function Wallets() {
                 <div className="flex justify-between p-4">
                     <h1 className="text-xl">Suas carteiras.</h1>
                     <Link href="/wallet/testasd">
-                        <Button className="ml-4">Nova carteira</Button>
+                        <p className="ml-4">Nova carteira</p>
                     </Link>
                 </div>
             </div>
