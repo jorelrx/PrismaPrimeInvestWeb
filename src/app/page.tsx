@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
+    console.log("Home");
     return (
         <h1>Dashboard</h1>
     );
