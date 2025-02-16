@@ -24,7 +24,9 @@ jobs:
 
       # 3. Instalar dependências
       - name: Install dependencies
-        run: npm ci  # Usa package-lock.json para garantir versões exatas
+        run: |
+          npm install -g npm@latest
+          npm install --legacy-peer-deps
 
       # 4. Build do projeto Next.js
       - name: Build Next.js project
