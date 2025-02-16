@@ -15,7 +15,7 @@ const AppSidebar: React.FC = () => {
             <SidebarHeader className="flex flex-row content-center items-center bg-blue-900 h-20 border-b border-blue-500 px-3">
                 <Link href="/" className="flex items-center gap-2 text-white">
                     <div className="rounded-full bg-white w-16 h-16">
-                        <Image src="/logo.svg" alt="Logo do site" width={80} height={80} />
+                        <Image src="/logo.png" alt="Logo do site" width={80} height={80} />
                     </div>
                     <h1 className="group-data-[collapsible=icon]:opacity-0">Prisma Prime Invest</h1>
                 </Link>
