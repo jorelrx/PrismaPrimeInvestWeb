@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - secondary-test
 
 jobs:
   build-and-deploy:
