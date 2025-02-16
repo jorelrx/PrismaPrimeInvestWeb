@@ -1,7 +1,6 @@
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import axios, { AxiosInstance } from "axios";
 import { parseCookies } from "nookies";
-import { redirect } from "next/navigation";
 
 function createHttpClient(): AxiosInstance {
     const instance = axios.create({
@@ -13,8 +12,7 @@ function createHttpClient(): AxiosInstance {
 
     instance.interceptors.request.use(
         (config) => {
-            // Obtém o token usando `nookies`
-            const cookies = parseCookies(); // Funciona tanto no cliente quanto no servidor
+            const cookies = parseCookies();
             const token = cookies.token;
 
             if (token) {
@@ -31,7 +29,6 @@ function createHttpClient(): AxiosInstance {
         (error) => {
             if (error.response?.status === 401) {
                 console.log("Não autorizado. Redirecionar para login.");
-                redirect("/login");
             }
             return Promise.reject<IApiResponse<string>>(error.response);
         }
