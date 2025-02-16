@@ -18,6 +18,6 @@ COPY package.json package-lock.json ./
 
 RUN npm install --production --legacy-peer-deps
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["npm", "run", "start"]
