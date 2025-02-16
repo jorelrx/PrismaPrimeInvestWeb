@@ -3,7 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback } from "./ui/avatar";
 import { SidebarTrigger } from "./ui/sidebar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNotification } from "@/contexts/NotificationContext";
@@ -42,7 +42,6 @@ const Header: React.FC = () => {
                             <div className="flex items-center gap-1 hover:cursor-pointer">
                                 <span>Olá, {user.firstName}!</span>
                                 <Avatar className="bg-white">
-                                    <AvatarImage src="./logo.png" alt="@shadcn" />
                                     <AvatarFallback>JV</AvatarFallback>
                                 </Avatar>
                             </div>
