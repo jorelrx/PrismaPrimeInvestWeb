@@ -1,15 +1,12 @@
 "use client";
 
-import { ChartCandlestickIcon, HouseIcon, PlusCircleIcon, RefreshCwIcon, UsersIcon, Wallet } from "lucide-react";
+import { HouseIcon, Wallet } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubItem } from "./ui/sidebar";
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
 import Link from "next/link";
-import { useAuth } from "@/contexts/AuthContext";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 
 const AppSidebar: React.FC = () => {
-    const { user } = useAuth();
     return (
         <Sidebar collapsible="offcanvas" className="border-blue-500">
             <SidebarHeader className="flex flex-row content-center items-center bg-blue-900 h-20 border-b border-blue-500 px-3">
@@ -37,16 +34,6 @@ const AppSidebar: React.FC = () => {
                         <SidebarMenu>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild className="hover:bg-blue-500 hover:text-blue-50 hover:p-5 transition-all duration-200">
-                                <Link href="/funds" className="px-5 rounded-none">
-                                    <ChartCandlestickIcon />
-                                    <span>Assets</span>
-                                </Link>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        </SidebarMenu>
-                        <SidebarMenu>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild className="hover:bg-blue-500 hover:text-blue-50 hover:p-5 transition-all duration-200">
                                 <Link href="/wallet" className="px-5 rounded-none">
                                     <Wallet />
                                     <span>Wallet</span>
@@ -56,51 +43,6 @@ const AppSidebar: React.FC = () => {
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
-                {user ? (
-                    <SidebarGroup className="text-blue-50 p-0 border-b border-blue-500">
-                        <SidebarGroupLabel className="text-blue-50 p-5">Administrator</SidebarGroupLabel>
-                        <SidebarGroupContent>
-                            <SidebarMenu>
-                                <Collapsible>
-                                    <SidebarMenuItem>
-                                        <CollapsibleTrigger asChild>
-                                            <SidebarMenuButton className="hover:bg-blue-500 hover:text-blue-50 hover:p-5 transition-all duration-200">
-                                                <ChartCandlestickIcon />
-                                                <span>Assets</span>
-                                            </SidebarMenuButton>
-                                        </CollapsibleTrigger>
-                                        <CollapsibleContent>
-                                            <SidebarMenuSub>
-                                                <SidebarMenuSubItem>
-                                                    <Link href="/funds/create" className="flex items-center gap-2 px-5 py-2 hover:bg-blue-500 hover:text-blue-50 transition-all duration-200">
-                                                        <PlusCircleIcon className="w-4 h-4" />
-                                                        <span>Create Asset</span>
-                                                    </Link>
-                                                </SidebarMenuSubItem>
-                                                <SidebarMenuSubItem>
-                                                    <Link href="/admin/assets/update" className="flex items-center gap-2 px-5 py-2 hover:bg-blue-500 hover:text-blue-50 transition-all duration-200">
-                                                        <RefreshCwIcon className="w-4 h-4" />
-                                                        <span>Update Asset</span>
-                                                    </Link>
-                                                </SidebarMenuSubItem>
-                                            </SidebarMenuSub>
-                                        </CollapsibleContent>
-                                    </SidebarMenuItem>
-                                </Collapsible>
-                            </SidebarMenu>
-                            <SidebarMenu>
-                                <SidebarMenuItem>
-                                    <SidebarMenuButton asChild className="hover:bg-blue-500 hover:text-blue-50 hover:p-5 transition-all duration-200">
-                                    <Link href="/users" className="px-5 rounded-none">
-                                        <UsersIcon />
-                                        <span>Users</span>
-                                    </Link>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            </SidebarMenu>
-                        </SidebarGroupContent>
-                    </SidebarGroup>
-                ) : null}
             </SidebarContent>
         </Sidebar>
     );
