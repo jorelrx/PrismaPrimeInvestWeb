@@ -1,12 +1,14 @@
-'use client'
+"use client";
 
-import { use } from "react";
+import { useParams } from "next/navigation";
 
-export default function WalletDetailsPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = use(params);
-    console.log("id", id);
+export default function WalletDetailsPage() {
+    const { id } = useParams<{ id: string }>();
+    console.log("WalletId: ", id);
 
     return (
-        <h1>{id}</h1>
+        <div>
+            <h1>Wallet: {id}</h1>
+        </div>
     );
 }
