@@ -1,25 +1,12 @@
-"use client";
+'use client'
 
-import { Suspense } from "react";
-import { useParams } from "next/navigation";
-import WalletDetails from "../components/WalletDetails";
-import WalletService from "@/services/WalletService";
+import { use } from "react";
 
-const walletService = new WalletService();
-
-export default function WalletDetailsPage() {
-    const { id } = useParams<{ id: string }>();
-
-    if (!id) {
-        return <p className="text-center text-red-500">ID inválido!</p>;
-    }
-
+export default function WalletDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params);
     console.log("id", id);
-    const wallet = walletService.getById(id);
 
     return (
-        <Suspense fallback={<p className="text-center text-gray-500">Carregando...</p>}>
-            <WalletDetails walletPrimise={wallet} />
-        </Suspense>
+        <h1>{id}</h1>
     );
 }
