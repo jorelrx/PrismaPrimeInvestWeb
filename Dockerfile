@@ -1,4 +1,4 @@
-FROM node:20 AS builder
+FROM prismaprimeinvestregistry.azurecr.io/node:20 AS builder
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -9,7 +9,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:20 AS runner
+FROM prismaprimeinvestregistry.azurecr.io/node:20 AS runner
 WORKDIR /app
 
 COPY --from=builder /app/.next ./.next
@@ -18,6 +18,7 @@ COPY package.json package-lock.json ./
 
 RUN npm install --production --legacy-peer-deps
 
-EXPOSE 8080
+ENV NODE_ENV=production
+EXPOSE 3000
 
 CMD ["npm", "run", "start"]

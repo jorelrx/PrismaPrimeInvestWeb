@@ -21,17 +21,23 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
+      - name: Pull and Push Base Image to ACR
+        run: |
+          docker pull node:20
+          docker tag node:20 prismaprimeinvestregistry.azurecr.io/node:20
+          docker push prismaprimeinvestregistry.azurecr.io/node:20
+
       - name: Build Docker image
         run: |
-          docker build -t prismaprimeinvestregistry.azurecr.io/ppi-web:latest .
+          docker build -t prismaprimeinvestregistry.azurecr.io/ppi-web:${{ github.sha }} .
 
       - name: Push Docker image to ACR
         run: |
-          docker push prismaprimeinvestregistry.azurecr.io/ppi-web:latest
+          docker push prismaprimeinvestregistry.azurecr.io/ppi-web:${{ github.sha }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: prisma-prime-invest
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Usando o Publish Profile
-          images: prismaprimeinvestregistry.azurecr.io/ppi-web:latest
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: prismaprimeinvestregistry.azurecr.io/ppi-web:${{ github.sha }}
