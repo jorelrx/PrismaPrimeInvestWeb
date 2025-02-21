@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <NotificationProvider>
                         <SidebarProvider>
                             <AppSidebar />
-                            <div className="w-screen">
+                            <div className="flex flex-col min-h-screen w-screen">
                                 <AuthModalProvider>
                                     <Header></Header>
                                     <AuthModal />

@@ -64,7 +64,7 @@ const Header: React.FC = () => {
                         </DropdownMenuContent>
                     </DropdownMenu>
                 ): (
-                    <Button className="bg-blue-900 shadow-blue-900 hover:bg-blue-900 hover:underline" onClick={() => openModal(true)}>Login/SignUp</Button>
+                    <Button className="bg-blue-900 shadow-blue-900 hover:bg-blue-900 hover:underline text-base" onClick={() => openModal(true)}>Entrar</Button>
                 )}
             </div>
         </header>
