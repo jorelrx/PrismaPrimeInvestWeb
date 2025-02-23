@@ -13,6 +13,7 @@ import { HeaderDetails } from "../components/HeaderDetails"
 import { FundChartCard } from "../components/FundChartCard"
 import { ChartPaymentsCard } from "../components/ChartPaymentsCard"
 import { formatCurrency } from "@/lib/utils";
+import { ReportList } from "../components/ReportList";
 
 const fundService = new FundService();
 const fundPaymentService = new FundPaymentService();
@@ -101,6 +102,24 @@ export default async function FundDetails(props: {
                         </CardHeader>
                         <CardContent className="px-2 sm:p-6">
                             <MultiChartPrice ticker={fund?.code} baseAmount={1000} purchaseDay={fund?.bestBuyDay} />
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+            
+            <div className="container mx-auto px-4 py-8 w-9/12">
+                <div className="flex flex-col gap-5">
+                    <Card>
+                        <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
+                            <div className="flex flex-1 items-center gap-1 px-6 py-5 sm:py-6">
+                                <CircleDollarSign />
+                                <CardTitle>
+                                    Relatórios
+                                </CardTitle>
+                            </div>
+                        </CardHeader>
+                        <CardContent className="px-2 sm:p-6">
+                            <ReportList assetId={fund?.id} />
                         </CardContent>
                     </Card>
                 </div>
