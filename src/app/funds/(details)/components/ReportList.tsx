@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUpDown, FileSearch } from "lucide-react";
-import ListTable from "@/components/ListTable";
-import { Button } from "@/components/ui/button";
-import { Row, Column, ColumnDef } from "@tanstack/react-table";
 import FundReportService from "@/services/FundReportService";
 import { FundReport } from "@/types/fund/FundReport";
+import { type Column, PaginatedListTable } from "@/components/PaginatedListTable";
+import { FileSearch } from "lucide-react";
 
 interface ReportListProps {
     assetId?: string;
@@ -16,89 +14,55 @@ const fundReportService = new FundReportService();
 
 export function ReportList({ assetId }: ReportListProps) {
     const [analyzeInvestment, setAnalyzeInvestment] = useState<FundReport[]>([]);
+    const [pagination, setPagination] = useState({
+        currentPage: 1,
+        pageSize: 10,
+        totalItems: 0,
+        totalPages: 0,
+    });
+
+    const handleOnPageChange = (page: number) => {
+        setPagination((current) => ({ ...current, currentPage: page }))
+    }
+
+    const handleOnPageSizeChange = (size: number) => {
+        setPagination((current) => ({ ...current, pageSize: size, currentPage: 1 }))
+    }
 
     useEffect(() => {
         if (assetId) {
             const fetchData = async () => {
-                const { response } = await fundReportService.getAll({ fundId: assetId });
-                setAnalyzeInvestment(response);
+                const { response } = await fundReportService.getAll({ fundId: assetId, page: pagination.currentPage, pageSize: pagination.pageSize });
+                setAnalyzeInvestment(response.items);
+                setPagination({
+                    currentPage: response.page,
+                    pageSize: response.pageSize,
+                    totalItems: response.totalItems,
+                    totalPages: response.totalPages,
+                });
             };
     
             fetchData();
         }
-    }, [assetId]);
+    }, [assetId, pagination.currentPage, pagination.pageSize]);
 
-    const columns: ColumnDef<FundReport>[] = [
+    const columns: Column<FundReport>[] = [
         {
-            accessorKey: "referenceDate",
-            header: ({ column }: { column: Column<FundReport> }) => {
-                return (
-                    <div className="flex items-center">
-                        <Button
-                            variant="ghost"
-                            onClick={() =>
-                                column.toggleSorting?.(column.getIsSorted() === "asc")
-                            }
-                        >
-                            Data
-                        </Button>
-                        <ArrowUpDown className="ml-2 h-4 w-4" />
-                    </div>
-                );
-            },
+            header: "Data de referência",
+            cell: (column) => <span className="font-medium">{column.referenceDate}</span>,
         },
         {
-            accessorKey: "type",
-            header: ({ column }: { column: Column<FundReport> }) => {
-                return (
-                    <div className="flex items-center">
-                        <Button
-                            variant="ghost"
-                            onClick={() =>
-                                column.toggleSorting?.(column.getIsSorted() === "asc")
-                            }
-                        >
-                            Quantidade
-                        </Button>
-                        <ArrowUpDown className="ml-2 h-4 w-4" />
-                    </div>
-                );
-            },
+            header: "Tipo de relatório",
+            cell: (column) => <span className="font-medium">{column.type}</span>,
         },
         {
-            accessorKey: "status",
-            header: ({ column }: { column: Column<FundReport> }) => {
-                return (
-                    <div className="flex items-center">
-                        <Button
-                            variant="ghost"
-                            onClick={() =>
-                                column.toggleSorting?.(column.getIsSorted() === "asc")
-                            }
-                        >
-                            Status
-                        </Button>
-                        <ArrowUpDown className="ml-2 h-4 w-4" />
-                    </div>
-                );
-            },
-            cell: ({ row }: { row: Row<FundReport> }) => {
-                const status = row.getValue("status") as boolean;
-                const formatted = status ? "Ativo" : "Inativo";
-
-                return formatted;
-            },
+            header: "Status",
+            cell: (column) => <span className="font-medium">{column.status ? "Ativo" : "Inativo"}</span>,
         },
         {
-            accessorKey: "reportId",
-            header: () => {
-                return (
-                    <p className="text-center text-base font-normal">Action</p>
-                );
-            },
-            cell: ({ row }: { row: Row<FundReport> }) => {
-                const reportId = row.getValue("reportId");
-                const url = `https://fnet.bmfbovespa.com.br/fnet/publico/exibirDocumento?id=${reportId}&cvm=true`;
+            header: "Ver relatório",
+            cell: (column) => {
+                const url = `https://fnet.bmfbovespa.com.br/fnet/publico/exibirDocumento?id=${column.reportId}&cvm=true`;
         
                 return (
                     <a href={url} target="_blank" rel="noopener noreferrer" className="inline-block">
@@ -110,6 +74,15 @@ export function ReportList({ assetId }: ReportListProps) {
     ];
 
     return (
-        <ListTable data={analyzeInvestment} columns={columns} onRowClick={() => {}} />
+        <div>
+            <PaginatedListTable
+                data={analyzeInvestment}
+                columns={columns}
+                pagination={pagination}
+                onPageChange={handleOnPageChange}
+                onPageSizeChange={handleOnPageSizeChange}
+                pageSizeOptions={[2, 10, 20, 30, 50, 100]}
+            />
+        </div>
     );
 }

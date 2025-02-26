@@ -51,7 +51,7 @@ export default function Home() {
     const { response: highFundDailyPricesResponse } = use(fundDailyPriceService.getAll(filtersHigh));
     const { response: lowFundDailyPricesResponse } = use(fundDailyPriceService.getAll(filtersLow));
 
-    const highFundDailyPrices: FundDailyPrice[] = highFundDailyPricesResponse.map(item => ({
+    const highFundDailyPrices: FundDailyPrice[] = highFundDailyPricesResponse.items.map(item => ({
         id: item.id,
         code: item.code,
         openPrice: item.openPrice,
@@ -61,7 +61,7 @@ export default function Home() {
         variation: calculateVariation(item.openPrice, item.closePrice),
     })).sort((a, b) => b.variation - a.variation);
 
-    const lowFundDailyPrices: FundDailyPrice[] = lowFundDailyPricesResponse.map(item => ({
+    const lowFundDailyPrices: FundDailyPrice[] = lowFundDailyPricesResponse.items.map(item => ({
         id: item.id,
         code: item.code,
         openPrice: item.openPrice,

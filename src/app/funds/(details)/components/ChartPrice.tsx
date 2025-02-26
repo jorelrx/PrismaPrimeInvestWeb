@@ -29,7 +29,7 @@ export function ChartPrice({ fundId, period } : ChartPriceProps) {
         if (fundId) {
             const fetchData = async () => {
                 const result = await fundDailyPriceService.getAll({ fundId, period });
-                setFundDailyPrices(result.response);
+                setFundDailyPrices(result.response.items);
             };
             
             fetchData();

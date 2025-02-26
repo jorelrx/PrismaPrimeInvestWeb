@@ -81,7 +81,7 @@ export function AddAssetModal({ isOpen, onClose, code, assetId }: AddAssetModalP
     const fetchWallets = useCallback(async () => {
         try {
             const { response } = await walletService.getAll({});
-            setWallets(response);
+            setWallets(response.items);
         } catch (error) {
             console.error("Erro ao buscar carteiras:", error);
         }
@@ -100,8 +100,8 @@ export function AddAssetModal({ isOpen, onClose, code, assetId }: AddAssetModalP
         try {
             const { response } = await fundDailyPriceService.getAll({ date: selectedDate, fundId: assetId });
 
-            if (response.length > 0) {
-                const { openPrice, closePrice } = response[0];
+            if (response.items.length > 0) {
+                const { openPrice, closePrice } = response.items[0];
                 const priceList = [];
 
                 if (openPrice <= closePrice) {

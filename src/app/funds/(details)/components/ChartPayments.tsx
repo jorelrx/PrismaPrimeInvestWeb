@@ -30,7 +30,7 @@ export function ChartPayment({ fundId, period } : ChartPaymentProps) {
         if (fundId) {
             const fetchData = async () => {
                 const result = await fundPaymentService.getAll({ fundId, period });
-                setFundPayments(result.response);
+                setFundPayments(result.response.items);
             };
     
             fetchData();

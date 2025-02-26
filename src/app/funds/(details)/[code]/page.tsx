@@ -25,10 +25,10 @@ export default async function FundDetails(props: {
 }) {
     const params = await props.params;
     const code = params.code
+
     const fund = await fundService.getByCodeAsync(code);
-    
     const fundPaymentsResponse = await fundPaymentService.getAll({ fundId: fund?.id })
-    const fundPayments = fundPaymentsResponse.response.reverse();
+    const fundPayments = fundPaymentsResponse.response.items.reverse();
     const dividends = fundPayments.slice(0, 12).map(payment => {
         return payment.dividend ? parseFloat(payment.dividend) : 0;
     });
@@ -118,7 +118,7 @@ export default async function FundDetails(props: {
                                 </CardTitle>
                             </div>
                         </CardHeader>
-                        <CardContent className="px-2 sm:p-6">
+                        <CardContent className="p-0">
                             <ReportList assetId={fund?.id} />
                         </CardContent>
                     </Card>

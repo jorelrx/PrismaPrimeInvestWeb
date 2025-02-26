@@ -24,7 +24,7 @@ export function TransactionsChartCard({ walletId }: TransactionsChartCardProps) 
         if (walletId) {
             const fetchData = async () => {
                 const { response } = await walletFundService.getAll({ walletId });
-                setAnalyzeInvestment(response);
+                setAnalyzeInvestment(response.items);
             };
     
             fetchData();

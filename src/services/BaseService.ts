@@ -1,16 +1,17 @@
 import axiosInstance from "@/lib/axiosInstance";
 import { IApiResponse } from "@/interfaces/IApiResponse";
+import { IPagedResult } from "@/interfaces/IPagedResult";
 
 export class BaseService<T, Y> {
     constructor(private readonly endpoint: string) {}
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async getAll(filters?: Record<string, any>): Promise<IApiResponse<T[]>> {
-        const result = await axiosInstance.get<IApiResponse<T[]>>(this.endpoint, {
-          params: filters, // Adiciona os filtros como query string
+    async getAll(filters?: Record<string, any>): Promise<IApiResponse<IPagedResult<T>>> {
+        const result = await axiosInstance.get<IApiResponse<IPagedResult<T>>>(this.endpoint, {
+            params: filters,
         });
         return result.data;
-      }
+    }
   
     async getById(id: string): Promise<IApiResponse<T>> {
       const response = await axiosInstance.get<IApiResponse<T>>(`${this.endpoint}/${id}`);

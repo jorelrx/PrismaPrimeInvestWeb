@@ -1,10 +1,12 @@
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import axios, { AxiosInstance } from "axios";
 import { parseCookies } from "nookies";
+import qs from "qs";
 
 function createHttpClient(): AxiosInstance {
     const instance = axios.create({
         baseURL: `https://prisma-prime-invest-ep.azurewebsites.net/api`,
+        paramsSerializer: (params) => qs.stringify(params, { arrayFormat: "repeat" }),
         headers: {
             "Content-Type": "application/json",
         },

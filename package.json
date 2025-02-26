@@ -18,6 +18,7 @@
     "@radix-ui/react-popover": "^1.1.5",
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-separator": "^1.1.0",
+    "@radix-ui/react-slider": "^1.2.3",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-switch": "^1.1.1",
     "@radix-ui/react-tabs": "^1.1.1",
@@ -32,6 +33,7 @@
     "lucide-react": "^0.460.0",
     "next": "15.0.3",
     "nookies": "^2.5.2",
+    "qs": "^6.14.0",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-day-picker": "^8.10.1",
     "react-dom": "19.0.0-rc-66855b96-20241106",
@@ -44,6 +46,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/qs": "^6.9.18",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
