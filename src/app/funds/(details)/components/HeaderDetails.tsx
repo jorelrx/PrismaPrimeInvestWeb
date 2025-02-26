@@ -25,7 +25,7 @@ export function HeaderDetails({ assetId, code, name }: HeaderDetailsProps) {
         if (user) {
             (async () => {
                 const { response } = await fundFavoriteService.getAll({ code });
-                setIdFavorite(response.length > 0 ? response[0].id : null);
+                setIdFavorite(response.items.length > 0 ? response.items[0].id : null);
             })();
         }
     }, [user, code]);
