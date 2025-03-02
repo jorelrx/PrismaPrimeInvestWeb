@@ -117,10 +117,10 @@ export default async function FundDetails(props: {
                                         </h3>
                                     </div>
                                     <div className="flex items-end gap-2">
-                                        <span className="text-4xl font-bold text-indigo-600 dark:text-indigo-500">{fund.pvp.toFixed(2)}</span>
+                                        <span className="text-4xl font-bold text-indigo-600 dark:text-indigo-500">{fund?.pvp.toFixed(2) ?? 0}</span>
                                     </div>
                                     <div className="mt-3 text-sm text-indigo-700/70 dark:text-indigo-400/70">
-                                        {fund.pvp < 1 ? "Negociando abaixo do valor patrimonial" : "Negociando acima do valor patrimonial"}
+                                        {fund?.pvp < 1 ? "Negociando abaixo do valor patrimonial" : "Negociando acima do valor patrimonial"}
                                     </div>
                                     <div className="mt-4 pt-4 border-t border-indigo-200/50 dark:border-indigo-700/30 flex justify-between">
                                         <div>
@@ -129,7 +129,7 @@ export default async function FundDetails(props: {
                                         </div>
                                         <div>
                                         <div className="text-xs text-indigo-600/70 dark:text-indigo-400/70">Market Cap</div>
-                                        <div className="font-medium text-indigo-800 dark:text-indigo-300">{formatMarketCap(fund.netAssetValue)}</div>
+                                        <div className="font-medium text-indigo-800 dark:text-indigo-300">{formatMarketCap(fund?.netAssetValue ?? 0)}</div>
                                         </div>
                                     </div>
                                 </CardContent>
