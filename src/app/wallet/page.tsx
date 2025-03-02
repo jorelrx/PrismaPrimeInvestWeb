@@ -100,7 +100,6 @@ export default function Wallets() {
             setLoading(true);
             const walletService = new WalletService();
             const filters = {
-                date: "2024-11-21",
                 page: pagination.currentPage,
                 pageSize: pagination.pageSize,
             };

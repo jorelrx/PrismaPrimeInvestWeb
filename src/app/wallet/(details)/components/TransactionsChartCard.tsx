@@ -30,6 +30,7 @@ export function TransactionsChartCard({ walletId }: TransactionsChartCardProps) 
             fetchData();
         }
     }, [walletId]);
+    
     const columns: ColumnDef<WalletFund>[] = [
         {
             accessorKey: "purchaseDate",

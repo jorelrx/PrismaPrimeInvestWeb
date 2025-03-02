@@ -10,7 +10,7 @@ export interface Fund {
     code: string;
     qtyQuotasIssued: number;
     netAssetValue: number;
-    totalShares: number;
+    totalShareholders: number;
     netAssetValuePerShare: number;
     price: number;
     maxPrice: number;

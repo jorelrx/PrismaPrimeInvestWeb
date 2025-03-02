@@ -24,7 +24,7 @@ export function FundChartCard({ fundId, fundCode }: FundChartCardProps) {
     const [selectedRange, setSelectedRange] = useState<keyof typeof timeFilters>("1-ano");
 
     return (
-        <Card>
+        <Card className="h-full flex flex-col">
             <CardHeader className="border-b flex flex-row items-center justify-between">
                     <div className="flex items-center gap-2">
                         <ChartLineUp className="h-5 w-5" />
@@ -40,8 +40,8 @@ export function FundChartCard({ fundId, fundCode }: FundChartCardProps) {
                         </TabsList>
                     </Tabs>
             </CardHeader>
-            <CardContent className="p-6">
-                <div className="h-[400px] w-full">
+            <CardContent className="flex-1 p-2">
+                <div className="h-full w-full">
                     <ChartPrice fundId={fundId} period={timeFilters[selectedRange]} />
                 </div>
             </CardContent>

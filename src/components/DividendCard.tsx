@@ -22,10 +22,10 @@ export function DividendCard({
     layoutCard = null,
     className = "",
 }: DividendCardProps) {
-    const bgColor = layoutCard === 'next' ? 'bg-blue-500' : 'bg-blue-900'
+    const bgColor = layoutCard === 'next' ? 'from-indigo-500 to-purple-700' : 'from-indigo-800 to-purple-800'
     
     return (
-        <Card className={`w-full max-w-sm ${bgColor} text-white ${className}`}>
+        <Card className={`w-full bg-gradient-to-br ${bgColor} text-gray-50 ${className}`}>
             <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-lg font-medium">
                     <CalendarDays className="h-5 w-5" />
@@ -48,7 +48,7 @@ export function DividendCard({
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <p className="text-sm font-medium">DATA BASE</p>
+                        <p className="text-sm font-medium">DATA COM</p>
                         <p className="text-lg">{baseDate || "-"}</p>
                     </div>
                     <div>

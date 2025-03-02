@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import FundReportService from "@/services/FundReportService";
 import { FundReport } from "@/types/fund/FundReport";
 import { type Column, PaginatedListTable } from "@/components/PaginatedListTable";
-import { FileSearch } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ReportListProps {
     assetId?: string;
@@ -49,25 +50,41 @@ export function ReportList({ assetId }: ReportListProps) {
     const columns: Column<FundReport>[] = [
         {
             header: "Data de referência",
+            align: "center",
             cell: (column) => <span className="font-medium">{column.referenceDate}</span>,
         },
         {
             header: "Tipo de relatório",
+            align: "center",
             cell: (column) => <span className="font-medium">{column.type}</span>,
         },
         {
             header: "Status",
+            align: "center",
             cell: (column) => <span className="font-medium">{column.status ? "Ativo" : "Inativo"}</span>,
         },
         {
             header: "Ver relatório",
+            align: "center",
             cell: (column) => {
                 const url = `https://fnet.bmfbovespa.com.br/fnet/publico/exibirDocumento?id=${column.reportId}&cvm=true`;
         
                 return (
-                    <a href={url} target="_blank" rel="noopener noreferrer" className="inline-block">
-                        <FileSearch className="h-4 w-4" />
-                    </a>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      asChild
+                      className="gap-1"
+                    >
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Visualizar
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    </Button>
                 );
             },
         },
